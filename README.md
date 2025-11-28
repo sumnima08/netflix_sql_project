@@ -1,6 +1,6 @@
 # Netflix Movies and TV Shows Data Analysis using SQL
 
-![NetflixLogo] (https://github.com/sumnima08/netflix_sql_project/blob/main/Netflix_Logo_RGB.psd)
+![NetflixLogo](https://github.com/sumnima08/netflix_sql_project/blob/main/Netflix_Logo_RGB.psd)
 
 A complete SQL-based data exploration project analyzing the Netflix titles dataset.
 
