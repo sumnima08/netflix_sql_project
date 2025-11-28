@@ -63,7 +63,7 @@ GROUP BY type;
 Determines the number of movies and TV shows on Netflix.
 
 ### 2. Most Common Rating by Content Type**
-```
+```sql
 SELECT type, rating
 FROM (
     SELECT type, rating, COUNT(*) AS cnt,
@@ -77,7 +77,7 @@ WHERE ranking = 1;
 Identifies the most frequent rating for movies and TV shows.
 
 ### 3. Movies Released in 2020
-```
+```sql
 SELECT *
 FROM Netflix
 WHERE type = 'Movie' AND release_year = 2020;
@@ -85,7 +85,7 @@ WHERE type = 'Movie' AND release_year = 2020;
 Lists all movies released in the year 2020.
 
 ### 4. Top 5 Countries by Content
-```
+```sql
 SELECT UNNEST(STRING_TO_ARRAY(country, ',')) AS country, COUNT(show_id) AS total_content
 FROM Netflix
 GROUP BY 1
@@ -95,7 +95,7 @@ LIMIT 5;
 Finds countries producing the most Netflix content.
 
 ### 5. Longest Movie
-```
+```sql
 SELECT *
 FROM Netflix
 WHERE type = 'Movie' AND duration = (SELECT MAX(duration) FROM Netflix);
@@ -103,7 +103,7 @@ WHERE type = 'Movie' AND duration = (SELECT MAX(duration) FROM Netflix);
 Identifies the longest movie on Netflix.
 
 ### 6. Content Added in the Last 5 Years
-```
+```sql
 SELECT *
 FROM Netflix
 WHERE TO_DATE(date_added, 'Month DD, YYYY') >= CURRENT_DATE - INTERVAL '5 years';
@@ -111,7 +111,7 @@ WHERE TO_DATE(date_added, 'Month DD, YYYY') >= CURRENT_DATE - INTERVAL '5 years'
 Lists content added recently.
 
 ### 7. Content by Director Rajiv Chilaka
-```
+```sql
 SELECT *
 FROM Netflix
 WHERE director ILIKE '%Rajiv Chilaka%';
@@ -119,7 +119,7 @@ WHERE director ILIKE '%Rajiv Chilaka%';
 Finds all titles by a specific director.
 
 ### 8. TV Shows with More Than 5 Seasons
-```
+```sql
 SELECT *
 FROM Netflix
 WHERE type = 'TV Show' AND SPLIT_PART(duration, ' ', 1)::NUMERIC > 5;
@@ -127,7 +127,7 @@ WHERE type = 'TV Show' AND SPLIT_PART(duration, ' ', 1)::NUMERIC > 5;
 Lists TV shows with more than five seasons.
 
 ### 9. Number of Titles per Genre
-```
+```sql
 SELECT UNNEST(STRING_TO_ARRAY(listed_in,',')) AS genre, COUNT(show_id) AS total_content
 FROM Netflix
 GROUP BY 1;
@@ -135,7 +135,7 @@ GROUP BY 1;
 Counts content items in each genre.
 
 ### 10. Yearly Average Content Released by India
-```
+```sql
 SELECT EXTRACT(YEAR FROM TO_DATE(date_added,'Month DD, YYYY')) AS year,
        COUNT(*) AS total_content,
        ROUND(COUNT(*)::NUMERIC / (SELECT COUNT(*) FROM Netflix WHERE country='India')::NUMERIC * 100,2) AS Avg_content_per_year
@@ -146,7 +146,7 @@ GROUP BY 1;
 Tracks India’s contribution to Netflix content per year.
 
 ### 11. Movies in Documentaries Category
-```
+```sql
 SELECT *
 FROM Netflix
 WHERE listed_in ILIKE '%Documentaries%';
@@ -154,7 +154,7 @@ WHERE listed_in ILIKE '%Documentaries%';
 Lists all documentary movies.
 
 ### 12. Content Without a Director
-```
+```sql
 SELECT *
 FROM Netflix
 WHERE director IS NULL;
@@ -162,7 +162,7 @@ WHERE director IS NULL;
 Identifies content missing director information.
 
 ### 13. Movies Featuring Salman Khan in the Last 10 Years
-```
+```sql
 SELECT *
 FROM Netflix
 WHERE casts ILIKE '%Salman Khan%' AND release_year > EXTRACT(YEAR FROM CURRENT_DATE) - 10;
@@ -170,7 +170,7 @@ WHERE casts ILIKE '%Salman Khan%' AND release_year > EXTRACT(YEAR FROM CURRENT_D
 Lists recent movies starring a specific actor.
 
 ### 14. Top 10 Indian Actors by Number of Appearances
-```
+```sql
 SELECT UNNEST(STRING_TO_ARRAY(casts,',')) AS actors, COUNT(*) AS total_content
 FROM Netflix
 WHERE country ILIKE '%India%'
@@ -181,7 +181,7 @@ LIMIT 10;
 Ranks actors based on appearances in Indian productions.
 
 ### 15. Content Categorization: Bad vs Good
-```
+```sql
 WITH new_table AS (
     SELECT *,
         CASE 
