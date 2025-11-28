@@ -1,6 +1,6 @@
 # Netflix TV shows and Movie Analysis Using SQL
 
-![Netflix Logo](https://github.com/sumnima08/netflix_sql_project/blob/main/Netflix_Logo_RGB.psd)
+![Netflix Logo](https://github.com/sumnima08/netflix_sql_project/blob/main/Netflix_Logo_PMS.png)
 
 **Project Overview**
 The Netflix dataset contains metadata for movies and TV shows available on the platform.
