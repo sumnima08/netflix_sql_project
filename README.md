@@ -1,6 +1,6 @@
 ## Netflix Movies and TV shows Analysis Using SQL
 
-[NetflixLogo](https://github.com/sumnima08/netflix_sql_project/blob/main/Netflix_Logo_RGB.psd)
+![NetflixLogo](https://github.com/sumnima08/netflix_sql_project/blob/main/Netflix_Logo_RGB.psd)
 
 In this project, I explored Netflix’s catalog using SQL to uncover patterns in content strategy, genre trends, and the evolution of titles added to the platform. What began as a simple dataset turned into a deeper story about how Netflix has expanded globally, the types of shows it invests in, and where data gaps exist.
 The goal of this project is to demonstrate real-world SQL skills in data cleaning, exploration, and insight generation — the same skills used in analytics roles to support business decisions.
