@@ -49,16 +49,21 @@ String Functions: Utilized SPLIT_PART(), STRING_TO_ARRAY(), and UNNEST() to mani
 
 -**Common Table Expressions (CTEs)**: Structured complex queries into readable, reusable steps for more efficient analysis.
 
+
 **Analysis & Queries**
 
 ### 1. Count of Movies vs TV Shows
+
 ```sql
 SELECT type, COUNT(show_id) AS total_content
 FROM netflix
 GROUP BY type;
+```
+
 Determines the number of movies and TV shows on Netflix.
 
-### 2. Most Common Rating by Content Type
+### 2. Most Common Rating by Content Type**
+```
 SELECT type, rating
 FROM (
     SELECT type, rating, COUNT(*) AS cnt,
@@ -67,89 +72,116 @@ FROM (
     GROUP BY 1,2
 ) t1
 WHERE ranking = 1;
+```
+
 Identifies the most frequent rating for movies and TV shows.
 
 ### 3. Movies Released in 2020
+```
 SELECT *
 FROM Netflix
 WHERE type = 'Movie' AND release_year = 2020;
+```
 Lists all movies released in the year 2020.
 
 ### 4. Top 5 Countries by Content
+```
 SELECT UNNEST(STRING_TO_ARRAY(country, ',')) AS country, COUNT(show_id) AS total_content
 FROM Netflix
 GROUP BY 1
 ORDER BY 2 DESC
 LIMIT 5;
+```
 Finds countries producing the most Netflix content.
 
 ### 5. Longest Movie
+```
 SELECT *
 FROM Netflix
 WHERE type = 'Movie' AND duration = (SELECT MAX(duration) FROM Netflix);
+```
 Identifies the longest movie on Netflix.
 
 ### 6. Content Added in the Last 5 Years
+```
 SELECT *
 FROM Netflix
 WHERE TO_DATE(date_added, 'Month DD, YYYY') >= CURRENT_DATE - INTERVAL '5 years';
+```
 Lists content added recently.
 
 ### 7. Content by Director Rajiv Chilaka
+```
 SELECT *
 FROM Netflix
 WHERE director ILIKE '%Rajiv Chilaka%';
+```
 Finds all titles by a specific director.
 
 ### 8. TV Shows with More Than 5 Seasons
+```
 SELECT *
 FROM Netflix
 WHERE type = 'TV Show' AND SPLIT_PART(duration, ' ', 1)::NUMERIC > 5;
+```
 Lists TV shows with more than five seasons.
 
 ### 9. Number of Titles per Genre
+```
 SELECT UNNEST(STRING_TO_ARRAY(listed_in,',')) AS genre, COUNT(show_id) AS total_content
 FROM Netflix
 GROUP BY 1;
+```
 Counts content items in each genre.
 
 ### 10. Yearly Average Content Released by India
+```
 SELECT EXTRACT(YEAR FROM TO_DATE(date_added,'Month DD, YYYY')) AS year,
        COUNT(*) AS total_content,
        ROUND(COUNT(*)::NUMERIC / (SELECT COUNT(*) FROM Netflix WHERE country='India')::NUMERIC * 100,2) AS Avg_content_per_year
 FROM Netflix
 WHERE country = 'India'
 GROUP BY 1;
+```
 Tracks India’s contribution to Netflix content per year.
 
 ### 11. Movies in Documentaries Category
+```
 SELECT *
 FROM Netflix
 WHERE listed_in ILIKE '%Documentaries%';
+```
 Lists all documentary movies.
 
 ### 12. Content Without a Director
+```
 SELECT *
 FROM Netflix
 WHERE director IS NULL;
+```
 Identifies content missing director information.
 
 ### 13. Movies Featuring Salman Khan in the Last 10 Years
+```
 SELECT *
 FROM Netflix
 WHERE casts ILIKE '%Salman Khan%' AND release_year > EXTRACT(YEAR FROM CURRENT_DATE) - 10;
+```
 Lists recent movies starring a specific actor.
 
 ### 14. Top 10 Indian Actors by Number of Appearances
+```
 SELECT UNNEST(STRING_TO_ARRAY(casts,',')) AS actors, COUNT(*) AS total_content
 FROM Netflix
 WHERE country ILIKE '%India%'
 GROUP BY 1
 ORDER BY 2 DESC
 LIMIT 10;
+```
 Ranks actors based on appearances in Indian productions.
 
 ### 15. Content Categorization: Bad vs Good
+```
 WITH new_table AS (
     SELECT *,
         CASE 
@@ -161,18 +193,30 @@ WITH new_table AS (
 SELECT category, COUNT(*) AS total_content
 FROM new_table
 GROUP BY 1;
+```
 Labels content as "Bad" or "Good" based on keywords in descriptions and counts them.
 
-**🔍 Key Insights**
+
+** Key Insights**
 -Netflix offers more movies than TV shows globally.
+
 -Most content ratings vary by type; family-friendly ratings dominate.
+
 -India produces significant Netflix content, especially in recent years.
+
 -Some movies and TV shows are missing director information.
+
 -Certain actors (e.g., Salman Khan) dominate Indian movie appearances.
+
 -Keyword-based content categorization can help identify sensitive content.
 
-**💡 Potential Applications**
-Strategic content acquisition for streaming platforms
-Regional content analysis and marketing
-Actor popularity tracking for casting decisions
-Family-friendly vs mature content reporting
+
+** Potential Applications**
+-Strategic content acquisition for streaming platforms
+
+-Regional content analysis and marketing
+
+-Actor popularity tracking for casting decisions
+
+-Family-friendly vs mature content reporting
+
