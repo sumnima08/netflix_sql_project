@@ -1,5 +1,7 @@
 # Netflix TV shows and Movie Analysis Using SQL
 
+Download the Dataset: [Kaggle Netflix Dataset](https://github.com/sumnima08/netflix_sql_project/blob/main/netflix_titles.csv)
+
 ![Netflix Logo](https://github.com/sumnima08/netflix_sql_project/blob/main/Netflix_Logo_PMS.png)
 
 **Project Overview**
